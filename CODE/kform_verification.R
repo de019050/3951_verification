@@ -1,6 +1,16 @@
 library(readr)
-ALLREFLEX <- read_csv("DATA/ALLREFLEX.csv")
+library(dplyr)
+ALLREFLEX <- read_csv("../DATA/ALLREFLEX.csv")
 
+ISO_KFORMTest <- read_csv("../DATA/ISO_KFORMTest.csv")
+
+
+#
+# Create Test Input Data
+#
+ISO_KFORM_Input<-ISO_KFORMTest %>%
+  group_by(Charge,LSL,USL,kValue) %>% 
+  summarise(n=n(),value=mean(Value,na.rm=T), std=sd(Value,na.rm=T))
 
 
 # New k-form function 
