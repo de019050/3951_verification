@@ -43,6 +43,35 @@ ISO_KFORM_Input<-ISO_KFORMTest %>%
 # }
 
 
+# Define the function with five parameters
+myFunction <- function(input1, input2, input3 = NULL, input4 = NULL, input5) {
+  # Check if mandatory inputs are missing or NA
+  if (missing(input1) || is.na(input1) || missing(input2) || is.na(input2) || missing(input5) || is.na(input5)) {
+    stop("Inputs 1, 2, and 5 are mandatory and cannot be NA.")
+  }
+  
+  # Determine which option to use based on the presence and value of optional inputs
+  input3_present = !missing(input3) && !is.na(input3)
+  input4_present = !missing(input4) && !is.na(input4)
+  
+  if (!input3_present && !input4_present) {
+    stop("At least one of input 3 or input 4 is required.")
+  } else if (input4_present && !input3_present) {
+    # Proceed with option 1
+    return("Option 1 activated")
+  } else if (input3_present && !input4_present) {
+    # Proceed with option 2
+    return("Option 2 activated")
+  } else {
+    # Proceed with option 3
+    return("Option 3 activated")
+  }
+}
+
+# Example usage
+# myFunction(input1, input2, input3, input4, input5)
+
+
 
 k_form_ISO<-function(MeanValue,STD,LSL,USL,kFac){
 # Function to calculate k-form acceptance criteria
