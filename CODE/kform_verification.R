@@ -23,24 +23,24 @@ ISO_KFORM_Input<-ISO_KFORMTest %>%
 # bases on tibble containing all neccessary informations
 # input only one tibble
 
-k_form<-function(Data){
-  
-  
-  # itime
-  k_u_itime=ifelse((data$itime_usl-data$mitime)/data$sitime-data$kfac<0,"FALSE","TRUE")
-  k_u_itime_val=(data$itime_usl-data$mitime)/data$sitime-data$kfac
-  # dose
-  k_l_dose=ifelse((data$mdose-data$dose_lsl)/data$sdose-data$kfac<0,"FALSE","TRUE")
-  k_l_dose_val=(data$mdose-data$dose_lsl)/data$sdose-data$kfac
-  # npos
-  k_l_npos=ifelse((data$mnpos-data$npos_usl)/data$snpos-data$kfac<0,"FALSE","TRUE")
-  k_l_npos_val=(data$mnpos-data$npos_usl)/data$snpos-data$kfac
-  
-  
-  #return(cbind(k_u_itime,k_u_itime_val+k, k,k_l_dose,k_l_dose_val+k,k,k_l_npos,k_l_npos_val+k, k))
-  return(cbind(data$charge,data$mat_bez,k_u_itime,k_u_itime_val,k_l_dose,k_l_dose_val,k_l_npos,k_l_npos_val, data$kfac))
-  
-}
+# k_form<-function(Data){
+#   
+#   
+#   # itime
+#   k_u_itime=ifelse((data$itime_usl-data$mitime)/data$sitime-data$kfac<0,"FALSE","TRUE")
+#   k_u_itime_val=(data$itime_usl-data$mitime)/data$sitime-data$kfac
+#   # dose
+#   k_l_dose=ifelse((data$mdose-data$dose_lsl)/data$sdose-data$kfac<0,"FALSE","TRUE")
+#   k_l_dose_val=(data$mdose-data$dose_lsl)/data$sdose-data$kfac
+#   # npos
+#   k_l_npos=ifelse((data$mnpos-data$npos_usl)/data$snpos-data$kfac<0,"FALSE","TRUE")
+#   k_l_npos_val=(data$mnpos-data$npos_usl)/data$snpos-data$kfac
+#   
+#   
+#   #return(cbind(k_u_itime,k_u_itime_val+k, k,k_l_dose,k_l_dose_val+k,k,k_l_npos,k_l_npos_val+k, k))
+#   return(cbind(data$charge,data$mat_bez,k_u_itime,k_u_itime_val,k_l_dose,k_l_dose_val,k_l_npos,k_l_npos_val, data$kfac))
+#   
+# }
 
 
 
@@ -49,22 +49,22 @@ k_form_ISO<-function(MeanValue,STD,LSL,USL,kFac){
 # for one-sided values
     if (LSL == 'NA') { 
       QU= (USL-MeanValue)/STD
-      print(round(QU,digits=3))
+      #print(round(QU,digits=3))
       if (QU >= kFac){
-        cat('The Lot meets the acceptability criteriance. QU =',QU,'is geq than kfac =',kFac)  
+        cat('The Lot meets the acceptability criterion.criterion. QU =',round(QU,digits=3),'is geq than kfac =',kFac)  
       } else if (QU < kFac){
-        cat('The Lot does not meet the acceptability criteriance. QU =',QU,'is less than kfac =',kFac)  
+        cat('The Lot does not meet the acceptability criterion. QU =',round(QU,digits=3),'is less than kfac =',kFac)  
       } else {
         cat('Check inputs')  
       }
       
       } else if (USL == 'NA') {
       QL= (MeanValue-LSL)/STD
-      print(round(QL,digits = 3))
+      #print(round(QL,digits = 3))
       if (QL >= kFac){
-        cat('The Lot meets the acceptability criteriance. QL =',QL,'is geq than kfac =',kFac)  
+        cat('The Lot meets the acceptability criterion. QL =',round(QL,digits=3),'is geq than kfac =',kFac)  
       } else if (QL < kFac){
-        cat('The Lot does not meet the acceptability criteriance. QL =',QL,'is less than kfac =',kFac)  
+        cat('The Lot does not meet the acceptability criterion. QL =',round(QL,digits=3),'is less than kfac =',kFac)  
       } else {
         cat('Check inputs')  
       }
@@ -73,18 +73,11 @@ k_form_ISO<-function(MeanValue,STD,LSL,USL,kFac){
     } else {
     print("Wrong inputs")
     }      
-   
-  
-  
-  
   
 }
 
+ISO_KFORM_Input
 
 k_form_ISO(54.615385,3.3301267,'NA',60,1.426)
+
 k_form_ISO(6.551,0.3251,4.0,'NA',2.580)
-
-
-k_form_ISO(54.615385,3.3301267,10,60,1.426)
-k_form_ISO(54.615385,3.3301267,'NA',60,1.426)
-k_form_ISO(54.615385,3.3301267,'NA','NA',1.426)
