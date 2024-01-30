@@ -134,6 +134,7 @@ k_form_ISO<-function(MeanValue,STD,LSL,USL,kFac){
 }
 
 # Input Data from both examples in Chapter16.2
+
 ISO_KFORM_Input
 # Example1
 k_form_ISO(54.615385,3.3301267,'NA',60,1.426)
