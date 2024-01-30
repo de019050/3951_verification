@@ -49,39 +49,35 @@ myFunction <- function(input1, input2, input3 = NULL, input4 = NULL, input5) {
     QU= (USL-MeanValue)/STD
     #print(round(QU,digits=3))
     if (QU >= kFac){
-      cat('The Lot meets the acceptability criterion.criterion. QU =',round(QU,digits=3),'is geq than kfac =',kFac)
+      cat('The Lot meets the acceptability criterion. QU =',round(QU,digits=3),'is geq than kfac =',kFac,'\n')
     } else if (QU < kFac){
-      cat('The Lot does not meet the acceptability criterion. QU =',round(QU,digits=3),'is less than kfac =',kFac)
+      cat('The Lot does not meet the acceptability criterion. QU =',round(QU,digits=3),'is less than kfac =',kFac,'\n')
     } else {
       cat('QU Check inputs')
     }
-    return("Option 1 activated")
   } else if (input3_present && !input4_present) {
     QL= (MeanValue-LSL)/STD
     #print(round(QL,digits = 3))
     if (QL >= kFac){
-      cat('The Lot meets the acceptability criterion. QL =',round(QL,digits=3),'is geq than kfac =',kFac)
+      cat('The Lot meets the acceptability criterion. QL =',round(QL,digits=3),'is geq than kfac =',kFac,'\n')
     } else if (QL < kFac){
-      cat('The Lot does not meet the acceptability criterion. QL =',round(QL,digits=3),'is less than kfac =',kFac)
+      cat('The Lot does not meet the acceptability criterion. QL =',round(QL,digits=3),'is less than kfac =',kFac,'\n')
     } else {
       cat('Check inputs')
-    }
-    return("Option 2 activated")
-  } else {
+      }
+    } else {
     # Proceed with option 3
     print("Two limits! Use p-form!")
-    return("Option 3 activated")
   }
 }
 
 # Example usage
 # myFunction(input1, input2, input3, input4, input5)
 
-
-
-# Input Data from both examples in Chapter16.2
+# Input Data from both examples in Chapter 16.2
 
 ISO_KFORM_Input
+
 # Example1
 myFunction(54.615385,3.3301267,NA,60,1.426)
 
