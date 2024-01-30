@@ -84,6 +84,9 @@ myPFunction <- function(input1, input2, input3, input4, input5, input6, input7) 
   }
 
 }
+
+# Input Data from  examples in Chapter 16.3.2
+
 ISO_PFORM_Input
 # Example usage
 #myPFunction(MeanValue,STD,LSL,USL,pFac,fsFac,n)
