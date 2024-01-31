@@ -1,18 +1,26 @@
 
 
 # Define the function with five parameters
-#' Title
+#' k-Form function
 #'
-#' @param input1
-#' @param input2
-#' @param input3
-#' @param input4
-#' @param input5
+#' @param input1 Mean value
+#' @param input2 Standard deviation
+#' @param input3 LSL lower specification limit
+#' @param input4 USL upper specification limit
+#' @param input5 kFac,  tabled acceptance criterion
 #'
 #' @return Result String
-#' @export
+#' @export (readr, stats,dplry )
 #'
-#' @examples myKFunction(6.551,0.3251,4.0,NA,2.580)
+#' @examples
+#'
+#' # Example ISO 3951-2 Chapter 16.2
+#'  myKFunction(6.551,0.3251,4.0,NA,2.580)
+#'
+#' # Example ISO 3951-2 Chapter 16.2
+#'  myKFunction(54.615385,3.3301267,NA,60,1.426)
+#'
+#'
 #'
 myKFunction <- function(input1, input2, input3 = NULL, input4 = NULL, input5) {
   MeanValue<-input1
