@@ -1,26 +1,20 @@
-library(readr)
-library(dplyr)
-
-getwd()
-setwd(getwd())
-
-# Allreflex Data until 25012024
-ALLREFLEX <- read_csv("DATA/ALLREFLEX.csv")
-
-# Kform Examples from Chapter 16.2 of ISO 3951-2
-ISO_KFORMTest <- read_csv("DATA/ISO_KFORMTest.csv")
-
-
-#
-# Create Test Input Data
-#
-ISO_KFORM_Input<-ISO_KFORMTest %>%
-  group_by(Charge,LSL,USL,kValue) %>%
-  summarise(n=n(),value=mean(Value,na.rm=T), std=sd(Value,na.rm=T))
 
 
 # Define the function with five parameters
-myFunction <- function(input1, input2, input3 = NULL, input4 = NULL, input5) {
+#' Title
+#'
+#' @param input1
+#' @param input2
+#' @param input3
+#' @param input4
+#' @param input5
+#'
+#' @return Result String
+#' @export
+#'
+#' @examples myKFunction(6.551,0.3251,4.0,NA,2.580)
+#'
+myKFunction <- function(input1, input2, input3 = NULL, input4 = NULL, input5) {
   MeanValue<-input1
   STD<-input2
   LSL<-input3
@@ -76,10 +70,10 @@ myFunction <- function(input1, input2, input3 = NULL, input4 = NULL, input5) {
 
 # Input Data from both examples in Chapter 16.2
 
-ISO_KFORM_Input
-
-# Example1
-myFunction(54.615385,3.3301267,NA,60,1.426)
-
-# Example2
-myFunction(6.551,0.3251,4.0,NA,2.580)
+# ISO_KFORM_Input
+#
+# # Example1
+# myFunction(54.615385,3.3301267,NA,60,1.426)
+#
+# # Example2
+# myFunction(6.551,0.3251,4.0,NA,2.580)
