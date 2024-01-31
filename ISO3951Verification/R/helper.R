@@ -5,6 +5,7 @@
 #' @export
 #'
 #' @examples
+#'
 myHelperFunction <- function() {
 library(readr)
 library(dplyr)
