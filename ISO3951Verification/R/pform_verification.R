@@ -2,20 +2,27 @@
 
 # My new Verification Pform function
 # Define the function with seven parameters
-#' Title
+#' p-Form function
 #'
-#' @param input1
-#' @param input2
-#' @param input3
-#' @param input4
-#' @param input5
-#' @param input6
-#' @param input7
+#' @param input1 Mean value
+#' @param input2 Standard deviation
+#' @param input3 LSL lower specification limit
+#' @param input4 USL upper specification limit
+#' @param input5 p*,  tabled acceptance criterion
+#' @param input6 fs, tabled factor to calculate S_max
+#' @param input7 n, sample size
 #'
 #' @return Result String
-#' @export
+#' @export (readr, stats,dplry )
 #'
-#' @examples myPFunction(64.223,2.7899,60,70,0.051590,0.274,13)
+#' @examples
+#'
+#' # Example ISO 3951-2 Chapter 16.3.2.4
+#'  myPFunction(64.223,2.7899,60,70,0.051590,0.274,13)
+#'
+#' # Example ISO 3951-2 Chapter 16.3.2.5
+#'  myPFunction(64.223,2.7899,60,70,0.051590,0.285,13)
+#'
 #'
 myPFunction <- function(input1, input2, input3, input4, input5, input6, input7) {
   MeanValue<-input1
