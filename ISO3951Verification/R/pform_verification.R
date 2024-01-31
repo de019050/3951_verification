@@ -1,26 +1,22 @@
-library(readr)
-library(dplyr)
-
-getwd()
-setwd(getwd())
-
-# Allreflex Data until 25012024
-ALLREFLEX <- read_csv("DATA/ALLREFLEX.csv")
-
-# pform Examples from Chapter 16.3.2 of ISO 3951-2
-ISO_PFORMTest <- read_csv("DATA/ISO_PFORMTest.csv")
-
-
-#
-# Create Test Input Data
-#
-ISO_PFORM_Input<-ISO_PFORMTest %>%
-  group_by(Charge,LSL,USL,pValue,fsFac) %>%
-  summarise(n=n(),value=mean(Value,na.rm=T), std=sd(Value,na.rm=T))
 
 
 # My new Verification Pform function
 # Define the function with seven parameters
+#' Title
+#'
+#' @param input1
+#' @param input2
+#' @param input3
+#' @param input4
+#' @param input5
+#' @param input6
+#' @param input7
+#'
+#' @return Result String
+#' @export
+#'
+#' @examples myPFunction(64.223,2.7899,60,70,0.051590,0.274,13)
+#'
 myPFunction <- function(input1, input2, input3, input4, input5, input6, input7) {
   MeanValue<-input1
   STD<-input2
@@ -85,17 +81,17 @@ myPFunction <- function(input1, input2, input3, input4, input5, input6, input7) 
 
 }
 
-# Input Data from  examples in Chapter 16.3.2
-
-ISO_PFORM_Input
-# Example usage
-#myPFunction(MeanValue,STD,LSL,USL,pFac,fsFac,n)
-# Example Chapter 16.3.2.2
-myPFunction(3.5, 7.436,-10 , 10, 0.1925, 0.475, 3)
-# Example Chapter 16.3.2.3
-myPFunction(82.5,0.4082,82,84,0.0860,0.365,4)
-
-# Example Chapter 16.3.2.4
-myPFunction(64.223,2.7899,60,70,0.051590,0.274,13)
-# Example Chapter 16.3.2.5
-myPFunction(64.223,2.7899,60,70,0.06466,0.285,13)
+# # Input Data from  examples in Chapter 16.3.2
+#
+# ISO_PFORM_Input
+# # Example usage
+# #myPFunction(MeanValue,STD,LSL,USL,pFac,fsFac,n)
+# # Example Chapter 16.3.2.2
+# myPFunction(3.5, 7.436,-10 , 10, 0.1925, 0.475, 3)
+# # Example Chapter 16.3.2.3
+# myPFunction(82.5,0.4082,82,84,0.0860,0.365,4)
+#
+# # Example Chapter 16.3.2.4
+# myPFunction(64.223,2.7899,60,70,0.051590,0.274,13)
+# # Example Chapter 16.3.2.5
+# myPFunction(64.223,2.7899,60,70,0.06466,0.285,13)
