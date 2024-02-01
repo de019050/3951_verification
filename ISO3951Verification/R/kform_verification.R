@@ -14,6 +14,11 @@
 #'
 #' @examples
 #'
+#'
+#'
+#' #  Example usage
+#' #myPFunction(MeanValue,STD,LSL,USL,kFac)
+#'
 #' # Example ISO 3951-2 Chapter 16.2
 #'  myKFunction(6.551,0.3251,4.0,NA,2.580)
 #'
