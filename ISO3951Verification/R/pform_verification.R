@@ -2,7 +2,7 @@
 
 # My new Verification Pform function
 # Define the function with seven parameters
-#' p-Form function
+#' p-Form function (s-Method only)
 #'
 #' @param input1 Mean value
 #' @param input2 Standard deviation
