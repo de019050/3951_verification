@@ -1,7 +1,7 @@
 
 
 # Define the function with five parameters
-#' k-Form function
+#' k-Form function (s-Method only)
 #'
 #' @param input1 Mean value
 #' @param input2 Standard deviation
