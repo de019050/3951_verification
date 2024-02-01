@@ -14,7 +14,8 @@ getwd()
 setwd(getwd())
 
 # Allreflex Data until 25012024
-ALLREFLEX <- read_csv("DATA/ALLREFLEX.csv")
+ALLREFLEX <- read_csv("DATA/ALLREFLEX.csv",
+                      col_types = cols(charge = col_character()))
 
 # Kform Examples from Chapter 16.2 of ISO 3951-2
 ISO_KFORMTest <- read_csv("DATA/ISO_KFORMTest.csv")
