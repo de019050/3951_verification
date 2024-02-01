@@ -73,15 +73,3 @@ myKFunction <- function(input1, input2, input3 = NULL, input4 = NULL, input5) {
   }
 }
 
-# Example usage
-# myFunction(input1, input2, input3, input4, input5)
-
-# Input Data from both examples in Chapter 16.2
-
-# ISO_KFORM_Input
-#
-# # Example1
-# myFunction(54.615385,3.3301267,NA,60,1.426)
-#
-# # Example2
-# myFunction(6.551,0.3251,4.0,NA,2.580)
