@@ -46,7 +46,6 @@ ISO_PFORM_Input<-ISO_PFORMTest %>%
   summarise(n=n(),value=mean(Value,na.rm=T), std=sd(Value,na.rm=T))
 
 
-}
 
 simstart_ALL_Reflex_Num<-ALLREFLEX %>%
   group_by(mat_bez,charge) %>%
@@ -173,6 +172,8 @@ gg_plot1 <- ggplot(plotdataset,
   geom_point(aes( y = maxact)) +
   geom_point(aes( y = minact)) +
   geom_point(aes( y = sact)) +
+  geom_point(aes( y = skact)) +
+  geom_point(aes( y = kact)) +
   #geom_point(aes( y = ((maxact-Results)-(Results-minact))/(maxact-minact)*100)) +
   xlab("Batches") +
   ylab("Dose Accuracy") +
@@ -184,3 +185,5 @@ gg_plot1 <- ggplot(plotdataset,
 gg_plot1
 
 ggplotly(gg_plot1)
+
+}
