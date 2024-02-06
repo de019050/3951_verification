@@ -13,6 +13,7 @@ library(readr)
   library(moments)
   library(ggplot2)
   library(plotly)
+  library(stringr)
 
 getwd()
 setwd(getwd())
@@ -45,6 +46,28 @@ ISO_PFORM_Input<-ISO_PFORMTest %>%
   group_by(Charge,LSL,USL,pValue,fsFac) %>%
   summarise(n=n(),value=mean(Value,na.rm=T), std=sd(Value,na.rm=T))
 
+
+
+alldat <- `alldat_2024-02-06`
+
+
+
+ALLREFLEX<-alldat%>%
+  filter(str_detect(alldat$status,"r_f")==TRUE)%>%
+  # to get only released one
+  filter(!is.na(sap_prueflos))%>%
+  filter(!is.na(frei_datum))%>%
+  filter(!is.na(import_file))%>%
+  filter(!is.na(aql_aql))%>%
+  filter(!is.na(geraet))%>%
+  dplyr::select(-c(import_file1,ref_auftr_nr,auftr_typ,storno_grund,storno_datum,four_eyes_check,preisli_nr,preisli_vers,kuli_bez,anz_zyklen,prob_nr,zykl_nr,param_art,param_bez,untergrenzen,obergrenzen))%>%
+  #filter(str_detect(alldat$status,"r_f")==TRUE)%>%
+  #filter(charge != "2F026")%>%
+  #filter(charge != "3F222")%>%
+  pivot_wider(id_cols=c(status,frei_datum,auftr_nr,mat_nr,charge,met_d_nr,mat_bez,anzahl_muster),
+              names_from = param_nr,
+              values_from = e_wert)%>%
+  mutate(order=row_number())
 
 
 simstart_ALL_Reflex_Num<-ALLREFLEX %>%
@@ -164,19 +187,19 @@ equidata<-newdatatemp1 %>%
 
 
 # Test plotter
-plotdataset <<- mt_long %>% filter(EDO == "mact")
+plotdataset <<- mt_long %>%filter (mat_bez == "JUPITER")|> filter(EDO == "mitime")
 
 gg_plot1 <- ggplot(plotdataset,
                    aes(x = charge,color = mat_bez))+
   geom_point(aes( y = Results)) +
-  geom_point(aes( y = maxact)) +
-  geom_point(aes( y = minact)) +
-  geom_point(aes( y = sact)) +
-  geom_point(aes( y = skact)) +
-  geom_point(aes( y = kact)) +
+  geom_point(aes( y = maxitime)) +
+  geom_point(aes( y = minitime)) +
+  geom_point(aes( y = sitime)) +
+  geom_point(aes( y = skitime)) +
+  geom_point(aes( y = kitime)) +
   #geom_point(aes( y = ((maxact-Results)-(Results-minact))/(maxact-minact)*100)) +
   xlab("Batches") +
-  ylab("Dose Accuracy") +
+  ylab("itime") +
   #geom_hline(yintercept = ifelse(plotdataset$mat_bez=="JUPITER",2,1.14), color = "red", linetype = "dashed", alpha = 0.5) +
   #ylim(c(ifelse(plotdataset$mat_bez=="JUPITER",1.5,0.5), ifelse(plotdataset$mat_bez=="JUPITER",2.5,1.5))) +
   #geom_hline(yintercept = ifelse(plotdataset$mat_bez=="JUPITER",2,1.14), color = "red", linetype = "dashed", alpha = 0.5) +
