@@ -16,41 +16,43 @@ library(tidyr)
 SA_clr_defaults()
 
 
-ZWICK_ROHDATA_A <- read_excel("C:/Users/De019050/Downloads/ZWICK_ROHDATA_A.xlsx",
-                              col_types = c("text", "numeric", "numeric",
-                                            "numeric", "numeric", "numeric", "numeric",
-                                            "numeric", "numeric", "numeric"))
-
-
-ZWICK_ROHDATA_B <- read_excel("C:/Users/De019050/Downloads/ZWICK_ROHDATA_B.xlsx",
-                              col_types = c("text", "numeric", "numeric",
-                                            "numeric", "numeric", "numeric", "numeric",
-                                            "numeric", "numeric", "numeric"))
-
-
-
-
-
-a<-ZWICK_ROHDATA_A|>
-  filter(if_all(everything(), ~ !is.na(.x)))|>
-  #filter(!is.na(`Device-ID`))|>
-  pivot_longer(cols=2:10,names_to="EDO",values_to="Werte")|>
-  mutate(AI="JUPITER")|>
-  mutate(MTE="ZWICK")|>
-  mutate(RUN="A")
-
-
-
-b<-ZWICK_ROHDATA_B|>
-  filter(if_all(everything(), ~ !is.na(.x)))|>
-  #filter(!is.na(`Device-ID`))|>
-  pivot_longer(cols=2:10,names_to="EDO",values_to="Werte")|>
-  mutate(AI="MARS")|>
-  mutate(MTE="ZWICK")|>
-  mutate(RUN="B")
-
-
-c <- rbind(a,b)
+# ZWICK_ROHDATA_A <- read_excel("C:/Users/De019050/Downloads/ZWICK_ROHDATA_A.xlsx",
+#                               col_types = c("text", "numeric", "numeric",
+#                                             "numeric", "numeric", "numeric", "numeric",
+#                                             "numeric", "numeric", "numeric"))
+#
+#
+# ZWICK_ROHDATA_B <- read_excel("C:/Users/De019050/Downloads/ZWICK_ROHDATA_B.xlsx",
+#                               col_types = c("text", "numeric", "numeric",
+#                                             "numeric", "numeric", "numeric", "numeric",
+#                                             "numeric", "numeric", "numeric"))
+#
+#
+#
+#
+#
+# a<-ZWICK_ROHDATA_A|>
+#   filter(if_all(everything(), ~ !is.na(.x)))|>
+#   #filter(!is.na(`Device-ID`))|>
+#   pivot_longer(cols=2:10,names_to="EDO",values_to="Werte")|>
+#   mutate(AI="JUPITER")|>
+#   mutate(MTE="ZWICK")|>
+#   mutate(RUN="A")
+#
+#
+#
+# b<-ZWICK_ROHDATA_B|>
+#   filter(if_all(everything(), ~ !is.na(.x)))|>
+#   #filter(!is.na(`Device-ID`))|>
+#   pivot_longer(cols=2:10,names_to="EDO",values_to="Werte")|>
+#   mutate(AI="MARS")|>
+#   mutate(MTE="ZWICK")|>
+#   mutate(RUN="B")
+#
+#
+#
+# c <- rbind(a,b)
+c <- read_csv("DATA/c.csv")
 
 # Parameter e.g. for nortest::ad.test
 paramter_for_dist <-c|>reframe(Mean = mean(if_any(Werte)),STD=sd(if_any(Werte)),Min=min(if_any(Werte)),Max=max(if_any(Werte)), STE= STD/sqrt(n()), .by = c(AI,EDO))
@@ -136,58 +138,62 @@ grid.arrange( m1,m2,m3,m4,m5,m6,ncol=2,nrow=3)
 
 
 
-FKap <- ggplot(a)+
-  geom_bar(aes(),color = AI)
-FKap
-
-
-Fakt <- ggplot(a)+
-  geom_boxplot(aes(Fakt),outlier.colour = "red", outlier.shape = 1)
-
-tinj <- ggplot(a)+
-  geom_boxplot(aes(tinj),outlier.colour = "red", outlier.shape = 1)
-
-m <- ggplot(a)+
-  geom_boxplot(aes(m),outlier.colour = "red", outlier.shape = 1)
-
-Linj <- ggplot(a)+
-  geom_boxplot(aes(Linj),outlier.colour = "red", outlier.shape = 1)
-
-Lnc <- ggplot(a)+
-  geom_boxplot(aes(Lnc),outlier.colour = "red", outlier.shape = 1)
-
-
-myplot <- function(i){
-  p <- ggplot(a) + geom_boxplot(aes(y=i),outlier.colour = "red", outlier.shape = 1)
-  return(p)
-}
-
-p <- lapply(c("FKap","Fakt","tinj","m","Linj","Lnc"), myplot)
-
-do.call(grid.arrange, c(p))
-
-
-grid.arrange( FKap,Fakt,tinj,m,Linj,Lnc,ncol=2,nrow=3)
-
-grid.arrange(p,ncol=2,nrow=3)
 
 
 
 
-Linj <- ggplot(a|>filter(EDO!="Device-ID")|>filter(EDO!="Lstartinj"),aes(x=EDO,y=Werte))+
-  geom_boxplot()+
-  facet_wrap(~EDO, scale="free")
-Linj
-
-Linj <- ggplot(a|>filter(EDO!="Device-ID")|>filter(EDO!="Lstartinj"),aes(x=Werte))+
-  geom_histogram(alpha=0.6)+
-  #geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)+
-  facet_wrap(~EDO, scale="free")
-ggplotly(Linj)
 
 
-Linj <- ggplot(a|>filter(EDO!="Device-ID")|>filter(EDO!="Lstartinj"),aes(x=order(`...1`,decreasing=FALSE),y=Werte))+
-  geom_point()+
-  facet_wrap(~EDO, scale="free")
-ggplotly(Linj)
+# Load the dataset
+data <- c
+
+# Create a boxplot
+ggplot(data, aes(x=EDO, y=Werte, color=AI)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) # Adjusting the x-axis labels for better readability
+
+
+
+
+ggplot(data, aes(x=AI, y=Werte, color=AI)) +
+  geom_boxplot() +
+  facet_wrap(~EDO, scales = "free_y") + # This will create a separate plot for each EDO value
+  labs(title = "Zwick Data",
+       subtitle = "First Comparability Study",  # Add title and subtitle
+        x = "AI Type", # Custom x-axis label
+        y = "Values") + # Custom y-axis label + # Add title and subtitle
+
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), strip.text.x = element_text(angle = 0))
+
+
+# Create a scatter plot with separate plots for each EDO and free y-axis scaling
+ggplot(data, aes(x=c$...2, y=Werte, color=AI)) +  # Adjust 'x=MTE' if another column is intended for the x-axis
+  geom_point(size=3) + # Increase the point size
+  geom_line() + # Connect the dots
+  facet_wrap(~EDO, scales = "free_y") + # Allows for free y-axis scaling within each facet
+  labs(title = "Zwick Data",
+       subtitle = "First Comparability Study",
+       x = "Testnumber", # Custom x-axis label
+       y = "Values") + # Custom y-axis label + # Add title and subtitle
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        strip.text.x = element_text(angle = 0))
+# ,
+#         plot.title = element_text(hjust = 0.5), # Center the title
+#         plot.subtitle = element_text(hjust = 0.5)) # Center the subtitle
+
+
+
+# Create histograms with separate plots for each EDO, including a title and subtitle
+ggplot(data, aes(x=Werte, fill=AI)) +  # We're using 'Werte' for the histogram's x-axis variable
+  geom_histogram(bins=30, alpha=0.7, position="identity") + # Adjust bins for finer or coarser histogram
+  facet_wrap(~EDO, scales = "free") + # Facet by EDO with free y-axis scaling
+  labs(title = "Zwick Data",
+       subtitle = "First Comparability Study",
+       x = "Values", # Custom x-axis label
+       y = "Frequency") + # Custom y-axis label, typically 'Frequency' for histograms
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        strip.text.x = element_text(angle = 0))
+
+
+
 
