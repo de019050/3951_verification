@@ -1,11 +1,11 @@
 Package: ISO3951Verification
 Type: Package
 Title: Verification of Code using ISO 3951-2 Examples
-Version: 0.1.0
+Version: 1.0.0
 Author: Dr. Patric Stracke
 Maintainer: Dr. Patric Stracke <Patric.Stracke@sanofi.com>
 Description: This package is intended to check R code output against the ISO 3951-2 examples.
-    This needs to be done a R is used as second instance for Qualification purposes.
+    This needs to be done as R is used as second instance for Qualification purposes.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

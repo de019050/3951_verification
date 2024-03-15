@@ -2,9 +2,9 @@
 % Please edit documentation in R/pform_verification.R
 \name{myPFunction}
 \alias{myPFunction}
-\title{p-Form function}
+\title{p-Form function (s-Method only, with mode selection)}
 \usage{
-myPFunction(input1, input2, input3, input4, input5, input6, input7)
+myPFunction(input1, input2, input3, input4, input5, input6, input7, input8)
 }
 \arguments{
 \item{input1}{Mean value}
@@ -15,25 +15,52 @@ myPFunction(input1, input2, input3, input4, input5, input6, input7)
 
 \item{input4}{USL upper specification limit}
 
-\item{input5}{p*,  tabled acceptance criterion}
+\item{input5}{p*, tabled acceptance criterion}
 
 \item{input6}{fs, tabled factor to calculate S_max}
 
 \item{input7}{n, sample size}
+
+\item{input8}{Mode of operation, must be either "adhoc" or "batch"}
 }
 \value{
-Result String
+Depending on the mode, returns a detailed string for "adhoc" or numeric values for "batch"
 }
 \description{
-p-Form function
+p-Form function (s-Method only, with mode selection)
 }
 \examples{
 
-# Example ISO 3951-2 Chapter 16.3.2.4
- myPFunction(64.223,2.7899,60,70,0.051590,0.274,13)
+# Example usage
+#myPFunction(MeanValue,STD,LSL,USL,pFac,fsFac,n,"mode")
 
-# Example ISO 3951-2 Chapter 16.3.2.5
- myPFunction(64.223,2.7899,60,70,0.051590,0.285,13)
+# Example Chapter 16.3.2.2
+myPFunction(3.5, 7.436,-10 , 10, 0.1925, 0.475, 3, "adhoc")
+myPFunction(3.5, 7.436,-10 , 10, 0.1925, 0.475, 3, "batch")
 
+# Example Chapter 16.3.2.3
+myPFunction(82.5,0.4082,82,84,0.0860,0.365,4, "adhoc")
+myPFunction(82.5,0.4082,82,84,0.0860,0.365,4, "batch")
+
+# Example Chapter 16.3.2.4
+myPFunction(64.223,2.7899,60,70,0.051590,0.274,13, "adhoc")
+myPFunction(64.223,2.7899,60,70,0.051590,0.274,13, "batch")
+
+# Example Chapter 16.3.2.5
+myPFunction(64.223,2.7899,60,70,0.06466,0.285,13, "adhoc")
+myPFunction(64.223,2.7899,60,70,0.06466,0.285,13, "batch")
+
+# For the use in batch mode:
+
+# Assuming `my_data` is your tibble and it has the columns: MeanValue, STD, LSL, USL, pFac, fsFac, n
+# Add a column mode to your tibble if it doesn't exist
+# my_data  <- my_data \%>\%
+#  mutate(mode = "batch")# or "adhoc", depending on what you want
+
+# Apply `myPFunction` rowwise
+# my_data <- my_data \%>\%
+#   rowwise() \%>\%
+#   mutate(output1 = list(myPFunction(MeanValue, STD, LSL, USL, pFac, fsFac, n, mode)))\%>\%
+#   ungroup()
 
 }

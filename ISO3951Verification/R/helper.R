@@ -1,5 +1,5 @@
 
-#' Title
+#' Not used in Package
 #'
 #' @return
 #' @export

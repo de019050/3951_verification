@@ -14,24 +14,39 @@
 #'
 #' @examples
 #'
-#'
-#'
 #' # Example usage
 #' #myPFunction(MeanValue,STD,LSL,USL,pFac,fsFac,n,"mode")
+#'
 #' # Example Chapter 16.3.2.2
 #' myPFunction(3.5, 7.436,-10 , 10, 0.1925, 0.475, 3, "adhoc")
 #' myPFunction(3.5, 7.436,-10 , 10, 0.1925, 0.475, 3, "batch")
+#'
 #' # Example Chapter 16.3.2.3
 #' myPFunction(82.5,0.4082,82,84,0.0860,0.365,4, "adhoc")
-#' myPFunction(82.5,0.4082,82,84,0.0860,0.365,4, "adhoc")
+#' myPFunction(82.5,0.4082,82,84,0.0860,0.365,4, "batch")
 #'
 #' # Example Chapter 16.3.2.4
 #' myPFunction(64.223,2.7899,60,70,0.051590,0.274,13, "adhoc")
 #' myPFunction(64.223,2.7899,60,70,0.051590,0.274,13, "batch")
+#'
 #' # Example Chapter 16.3.2.5
 #' myPFunction(64.223,2.7899,60,70,0.06466,0.285,13, "adhoc")
 #' myPFunction(64.223,2.7899,60,70,0.06466,0.285,13, "batch")
 #'
+#' # For the use in batch mode:
+#'
+#' # Assuming `my_data` is your tibble and it has the columns: MeanValue, STD, LSL, USL, pFac, fsFac, n
+#' # Add a column mode to your tibble if it doesn't exist
+#' # my_data  <- my_data %>%
+#' #  mutate(mode = "batch")# or "adhoc", depending on what you want
+#'
+#' # Apply `myPFunction` rowwise
+#' # my_data <- my_data %>%
+#' #   rowwise() %>%
+#' #   mutate(output1 = list(myPFunction(MeanValue, STD, LSL, USL, pFac, fsFac, n, mode)))%>%
+#' #   ungroup()
+#'
+
 myPFunction <- function(input1, input2, input3, input4, input5, input6, input7, input8) {
   MeanValue <- input1
   STD <- input2

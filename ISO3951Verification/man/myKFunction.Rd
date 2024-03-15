@@ -2,9 +2,9 @@
 % Please edit documentation in R/kform_verification.R
 \name{myKFunction}
 \alias{myKFunction}
-\title{k-Form function}
+\title{k-Form function (s-Method only, with mode selection)}
 \usage{
-myKFunction(input1, input2, input3 = NULL, input4 = NULL, input5)
+myKFunction(input1, input2, input3 = NULL, input4 = NULL, input5, input6)
 }
 \arguments{
 \item{input1}{Mean value}
@@ -15,22 +15,28 @@ myKFunction(input1, input2, input3 = NULL, input4 = NULL, input5)
 
 \item{input4}{USL upper specification limit}
 
-\item{input5}{kFac,  tabled acceptance criterion}
+\item{input5}{kFac, tabled acceptance criterion}
+
+\item{input6}{Mode of operation, must be either "adhoc" or "batch"}
 }
 \value{
-Result String
+Depending on the mode, returns a detailed string for "adhoc" or a numeric value for "batch"
 }
 \description{
-k-Form function
+k-Form function (s-Method only, with mode selection)
 }
 \examples{
 
-# Example ISO 3951-2 Chapter 16.2
- myKFunction(6.551,0.3251,4.0,NA,2.580)
+#' #  Example usage
+#mykFunction(MeanValue,STD,LSL,USL,kFac,mode)
 
 # Example ISO 3951-2 Chapter 16.2
- myKFunction(54.615385,3.3301267,NA,60,1.426)
+ myKFunction(6.551,0.3251,4.0,NA,2.580,'batch')
+ myKFunction(6.551,0.3251,4.0,NA,2.580,'adhoc')
 
+# Example ISO 3951-2 Chapter 16.2
+ myKFunction(54.615385,3.3301267,NA,60,1.426,'batch')
+ myKFunction(54.615385,3.3301267,NA,60,1.426,'adhoc')
 
 
 }
