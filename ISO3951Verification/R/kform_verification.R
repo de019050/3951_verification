@@ -42,6 +42,7 @@ myKFunction <- function(input1, input2, input3 = NULL, input4 = NULL, input5, in
 
   # input3_present <- !missing(input3) && !is.na(input3)
   # input4_present <- !missing(input4) && !is.na(input4)
+  # changed missing into is.null because batch mode call causes error
   input3_present <- !is.null(input3) && !is.na(input3)
   input4_present <- !is.null(input4) && !is.na(input4)
 
