@@ -1,6 +1,7 @@
+
 ---
 title: "Verification Functions According to ISO 3951-2"
-author: "Package: SO3951Verification"
+author: "Package: ISO3951Verification"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -11,7 +12,7 @@ vignette: >
 
 ### Introduction
 
-This vignette explains how to use the two main functions provided by the `SO3951Verification` package:
+This vignette explains how to use the two main functions provided by the `ISO3951Verification` package:
 
 - `myKFunction()` — based on the **k-form** acceptance criterion  
 - `myPFunction()` — based on the **p-form** acceptance criterion  
@@ -134,7 +135,7 @@ Both functions provide internal validation:
 
 ## Summary
 
-The `SO3951Verification` package offers a simple but powerful interface to perform lot verification based on ISO 3951-2, with:
+The `ISO3951Verification` package offers a simple but powerful interface to perform lot verification based on ISO 3951-2, with:
 
 - Dual-mode support: interactive (`adhoc`) and programmatic (`batch`)
 - Two methods for verifying conformance: `k-form` and `p-form`
