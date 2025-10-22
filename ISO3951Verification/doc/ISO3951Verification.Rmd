@@ -1,0 +1,42 @@
+---
+title: "ISO3951Verification"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ISO3951Verification}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ISO3951Verification)
+```
+
+
+### **Introduction**
+
+Distribution equivalence testing is a statistical procedure for determining whether two distributions are statistically indistinguishable. It is a useful tool in a variety of applications, such as machine learning, natural language processing, and computer vision.
+
+For example, in machine learning, distribution equivalence testing can be used to compare the distribution of the predictions of two different models. In natural language processing, it can be used to compare the distribution of the word embeddings of two different languages. In computer vision, it can be used to compare the distribution of the features of two different images.
+
+**Definition of Distribution Equivalence** The null hypothesis of distribution equivalence is that the two distributions are identical. The alternative hypothesis is that the two distributions are not identical: In mathematical terms, the null hypothesis can be written as follows: $$H0: F(x) = G(x) for ~all~ x$$
+
+where $F(x)$ and $G()x$ are the cumulative distribution functions of the two distributions being compared. The alternative hypothesis can be written as follows: $$H1: F(x) ≠ G(x) for~ some~ x$$ The following test were condsidered to be implemented:
+
+### The Kolmogorov-Smirnov (K-S) Test
+
+The Kolmogorov-Smirnov (K-S) Test is a non-parametric test used to determine if two samples are drawn from the same distribution. It's especially useful because it makes no assumption about the distribution of data (normal or otherwise), which is different from many other tests that assume a normal distribution.
+
+#### Hyptheses
+
+-   **Null Hypothesis (H0)**: There is no difference between the distribution of sample_data1 and sample_data2.
+
+-   **Alternative Hypothesis (H1)**: The distributions of sample_data1 and sample_data2 are different.
+
+We will calculate the K-S statistic and the p-value. The K-S statistic quantifies the distance between the empirical distribution functions of the two samples. The p-value helps us determine the significance of our results.
