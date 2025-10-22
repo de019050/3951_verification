@@ -1,4 +1,3 @@
-
 ---
 title: "Verification Functions According to ISO 3951-2"
 author: "Package: ISO3951Verification"
