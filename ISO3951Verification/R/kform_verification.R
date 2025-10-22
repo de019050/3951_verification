@@ -40,9 +40,13 @@ myKFunction <- function(input1, input2, input3 = NULL, input4 = NULL, input5, in
     stop("Mean Value, Standard Deviation, k-Factor, and Mode ('adhoc' or 'batch') are mandatory and cannot be NA or invalid.")
   }
 
-  input3_present <- !missing(input3) && !is.na(input3)
-  input4_present <- !missing(input4) && !is.na(input4)
+  # input3_present <- !missing(input3) && !is.na(input3)
+  # input4_present <- !missing(input4) && !is.na(input4)
+  # changed missing into is.null because batch mode call causes error
+  input3_present <- !is.null(input3) && !is.na(input3)
+  input4_present <- !is.null(input4) && !is.na(input4)
 
+  #
   if (input3_present && input4_present && input4 <= input3) {
     stop("USL must be larger than LSL.")
   }
