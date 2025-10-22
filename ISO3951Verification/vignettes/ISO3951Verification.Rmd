@@ -1,42 +1,141 @@
----
-title: "ISO3951Verification"
+1---
+title: "Verification Functions According to ISO 3951-2"
+author: "Package: ISO3951Verification"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ISO3951Verification}
+  %\VignetteIndexEntry{Verification Functions According to ISO 3951-2}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+### Introduction
+
+This vignette explains how to use the two main functions provided by the `ISO3951Verification` package:
+
+- `myKFunction()` — based on the **k-form** acceptance criterion  
+- `myPFunction()` — based on the **p-form** acceptance criterion  
+
+Both are aligned with the ISO 3951-2 standard and support both **adhoc** and **batch** evaluation modes.
+
+---
+
+## 1. `myKFunction()` — k-Form Acceptance Criterion
+
+### Purpose
+
+The `k-form` approach is applied when **only one specification limit** (LSL *or* USL) is relevant. It computes the ratio \( Q = \frac{\mu - \text{LSL}}{\sigma} \) or \( \frac{\text{USL} - \mu}{\sigma} \), and compares it against a tabulated **k-factor**.
+
+### Usage
+
+```r
+myKFunction(input1, input2, input3, input4, input5, input6)
 ```
 
-```{r setup}
-library(ISO3951Verification)
+| Argument | Description |
+|----------|-------------|
+| `input1` | Mean value \( \mu \) |
+| `input2` | Standard deviation \( \sigma \) |
+| `input3` | LSL (lower specification limit) or `NULL` |
+| `input4` | USL (upper specification limit) or `NULL` |
+| `input5` | k-factor (from standard table) |
+| `input6` | Mode: `"adhoc"` or `"batch"` |
+
+### Example 1 — Lower Spec Limit (LSL) Only
+
+```r
+myKFunction(6.551, 0.3251, 4.0, NA, 2.580, 'adhoc')
+myKFunction(6.551, 0.3251, 4.0, NA, 2.580, 'batch')
 ```
 
+### Example 2 — Upper Spec Limit (USL) Only
 
-### **Introduction**
+```r
+myKFunction(54.615385, 3.3301267, NA, 60, 1.426, 'adhoc')
+myKFunction(54.615385, 3.3301267, NA, 60, 1.426, 'batch')
+```
 
-Distribution equivalence testing is a statistical procedure for determining whether two distributions are statistically indistinguishable. It is a useful tool in a variety of applications, such as machine learning, natural language processing, and computer vision.
+---
 
-For example, in machine learning, distribution equivalence testing can be used to compare the distribution of the predictions of two different models. In natural language processing, it can be used to compare the distribution of the word embeddings of two different languages. In computer vision, it can be used to compare the distribution of the features of two different images.
+## 2. `myPFunction()` — p-Form Acceptance Criterion
 
-**Definition of Distribution Equivalence** The null hypothesis of distribution equivalence is that the two distributions are identical. The alternative hypothesis is that the two distributions are not identical: In mathematical terms, the null hypothesis can be written as follows: $$H0: F(x) = G(x) for ~all~ x$$
+### Purpose
 
-where $F(x)$ and $G()x$ are the cumulative distribution functions of the two distributions being compared. The alternative hypothesis can be written as follows: $$H1: F(x) ≠ G(x) for~ some~ x$$ The following test were condsidered to be implemented:
+The `p-form` is applied when **both LSL and USL are present**. It estimates the combined tail probabilities using the beta distribution, and compares the resulting \( \hat{p} \) value with a tabulated \( p^* \) acceptance limit.
 
-### The Kolmogorov-Smirnov (K-S) Test
+It also includes a check on \( S_{\text{max}} \) using the `fs` factor.
 
-The Kolmogorov-Smirnov (K-S) Test is a non-parametric test used to determine if two samples are drawn from the same distribution. It's especially useful because it makes no assumption about the distribution of data (normal or otherwise), which is different from many other tests that assume a normal distribution.
+### Usage
 
-#### Hyptheses
+```r
+myPFunction(input1, input2, input3, input4, input5, input6, input7, input8)
+```
 
--   **Null Hypothesis (H0)**: There is no difference between the distribution of sample_data1 and sample_data2.
+| Argument | Description |
+|----------|-------------|
+| `input1` | Mean value \( \mu \) |
+| `input2` | Standard deviation \( \sigma \) |
+| `input3` | LSL |
+| `input4` | USL |
+| `input5` | \( p^* \) – tabulated acceptance probability |
+| `input6` | \( f_s \) – factor to calculate \( S_{\text{max}} \) |
+| `input7` | Sample size \( n \) |
+| `input8` | Mode: `"adhoc"` or `"batch"` |
 
--   **Alternative Hypothesis (H1)**: The distributions of sample_data1 and sample_data2 are different.
+### Example — p-Form Calculations
 
-We will calculate the K-S statistic and the p-value. The K-S statistic quantifies the distance between the empirical distribution functions of the two samples. The p-value helps us determine the significance of our results.
+```r
+myPFunction(3.5, 7.436, -10, 10, 0.1925, 0.475, 3, "adhoc")
+myPFunction(3.5, 7.436, -10, 10, 0.1925, 0.475, 3, "batch")
+
+myPFunction(82.5, 0.4082, 82, 84, 0.0860, 0.365, 4, "adhoc")
+myPFunction(64.223, 2.7899, 60, 70, 0.051590, 0.274, 13, "adhoc")
+```
+
+---
+
+## 3. Batch Mode Application with Tibbles
+
+The `"batch"` mode is ideal for applying the functions across rows of a dataset.
+
+### Example: Applying `myPFunction()` Rowwise
+
+```r
+library(dplyr)
+
+my_data <- my_data %>%
+  mutate(mode = "batch") %>%
+  rowwise() %>%
+  mutate(output = list(myPFunction(MeanValue, STD, LSL, USL, pFac, fsFac, n, mode))) %>%
+  ungroup()
+```
+
+### Example: Applying `myKFunction()` Rowwise
+
+```r
+my_data <- my_data %>%
+  mutate(mode = "batch") %>%
+  rowwise() %>%
+  mutate(k_result = myKFunction(MeanValue, STD, LSL, USL, kFac, mode)) %>%
+  ungroup()
+```
+
+---
+
+## Error Handling
+
+Both functions provide internal validation:
+
+- Ensures required parameters are not `NA` or missing
+- Validates that LSL < USL (if both are used)
+- Confirms mode is either `"adhoc"` or `"batch"`
+
+---
+
+## Summary
+
+The `ISO3951Verification` package offers a simple but powerful interface to perform lot verification based on ISO 3951-2, with:
+
+- Dual-mode support: interactive (`adhoc`) and programmatic (`batch`)
+- Two methods for verifying conformance: `k-form` and `p-form`
+- Compatibility with tidyverse workflows for batch processing
